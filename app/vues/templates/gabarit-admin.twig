@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{ titre }}</title>
+  <link rel="stylesheet" type="text/css" href="/css/admin.css?v=1.1">
+</head>
+
+<body>
+  <div id="page">
+    <header>
+      <p>
+        {{ oUtilisateur.utilisateur_prenom }} {{ oUtilisateur.utilisateur_nom }}
+        <a href="admin?entite=utilisateur&action=d">Déconnecter</a>
+      </p>
+      <nav>
+         <ul>
+						<li>
+							<hr>
+							<a href="admin">Films</a>
+						</li>
+						<li>
+							<a href="admin?entite=genre">Genres</a>
+						</li>
+						<li>
+							<a href="admin?entite=realisateur">Réalisateurs</a>
+						</li>
+						<li>
+							<a href="admin?entite=acteur">Acteurs</a>
+						</li>
+						<li>
+							<a href="admin?entite=pays">Pays</a>
+						</li>
+						<li>
+							<a href="admin?entite=seance">Séances</a>
+						</li>
+						<li>
+							<a href="admin?entite=salle">Salles</a>
+						</li>
+						    {% if utilisateur.utilisateur_profil == "administrateur" %}
+						<li>
+							<hr>
+							<a href="admin?entite=utilisateur">Utilisateurs</a>
+						</li>
+						    {% endif %}
+					</ul>
+      </nav>
+    </header>
+    <main>
+
+    {{ include(templateMain) }}
+
+    </main>
+  </div>
+</body>
+</html>
