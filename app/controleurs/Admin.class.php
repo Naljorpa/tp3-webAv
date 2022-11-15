@@ -33,8 +33,8 @@ class Admin extends Routeur
       'd' => [
         'nom' => 'deconnecter'
       ],
-      'envoiCourriel' =>  [
-        'nom' => 'envoiCourriel',
+      'genererMdp' =>  [
+        'nom' => 'genererMdp',
         'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR]
       ]
     ],
@@ -88,8 +88,12 @@ class Admin extends Routeur
             foreach ($droits as $value) {
               if ($value == $this->oUtilisateur->utilisateur_profil) {
                 $this->$methode();
+                exit;
               }
             }
+            throw new Exception(self::FORBIDDEN);
+          } else {
+            $this->$methode();
           }
         } else {
           throw new Exception("L'action $this->action de l'entité $this->entite n'existe pas.");
@@ -145,9 +149,9 @@ class Admin extends Routeur
   }
 
   /**
-   * Envoi de courriel
+   * Genere Mdp et envoi de courriel
    */
-  public function envoiCourriel()
+  public function genererMdp()
   {
 
     $oUtilisateur = new Utilisateur(["utilisateur_id" => $this->utilisateur_id]);
@@ -169,7 +173,7 @@ class Admin extends Routeur
   }
 
   /**
-   * Lister les utilisateurs
+   * Function pour génère la une vue pour l'éditeur qui n'affiche que le gabarit latéral.
    */
   public function gestionFilms()
   {
@@ -230,9 +234,7 @@ class Admin extends Routeur
         ]);
         if ($utilisateur_id > 0) { // test de la clé de l'utilisateur ajouté
           $retour = (new GestionCourriel)->envoyerMdp($oUtilisateur);
-          if ($retour) echo "Courriel envoyé<br>.";
-          if (ENV === "DEV") echo "<a href=\"$retour\">Message dans le fichier $retour</a>";
-          $this->messageRetourAction = "Ajout de l'utilisateur numéro $utilisateur_id effectué.";
+          $this->messageRetourAction = "Ajout de l'utilisateur numéro $utilisateur_id effectué.<br>";
           if ($retour) {
             $this->messageRetourAction .= "Courriel envoyé<br>.";
             if (ENV === "DEV") {

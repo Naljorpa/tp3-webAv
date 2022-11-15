@@ -19,7 +19,7 @@
         <a href="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateur.utilisateur_id }}">modifier</a>
           {% if utilisateur.utilisateur_id %}
         <span class="confirmer" data-href="admin?entite=utilisateur&action=s&utilisateur_id={{ utilisateur.utilisateur_id }}">supprimer</span>
-        <a href="admin?entite=utilisateur&action=envoiCourriel&utilisateur_id={{ utilisateur.utilisateur_id }}">générer mdp</a>
+        <a href="admin?entite=utilisateur&action=genererMdp&utilisateur_id={{ utilisateur.utilisateur_id }}">générer mdp</a>
         {% endif %}
       </div>
     </div>

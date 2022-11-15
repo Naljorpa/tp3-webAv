@@ -189,6 +189,11 @@ class RequetesSQL extends RequetesPDO {
     return $this->CUDLigne(['utilisateur_id' => $utilisateur_id]); 
   }
 
+  /**
+   * @param array $champs tableau avec les champs mdp a modifier et la clé utilisateur_id
+   * @return boolean true si modification effectuée, false sinon
+   */
+
   public function modifierMdp($champs) {
     $this->sql ='
     UPDATE utilisateur SET utilisateur_mdp = SHA2( :utilisateur_mdp, 512) WHERE 

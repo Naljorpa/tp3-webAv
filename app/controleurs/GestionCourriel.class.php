@@ -15,14 +15,14 @@ class GestionCourriel
    */
   public function envoyerMdp($oUtilisateur)
   {
-    if(is_array($oUtilisateur)){
+    if (is_array($oUtilisateur)) {
       $destinataire  = $oUtilisateur['utilisateur_courriel'];
-    } else if (is_object($oUtilisateur)){
+    } else if (is_object($oUtilisateur)) {
       $destinataire  = $oUtilisateur->utilisateur_courriel;
     }
-    
-   
-    // $headers = "";
+
+    $objetCourriel = "Identifiant et mot de passe";
+
     $message  = (new Vue)->generer(
       'cMdp',
       [
@@ -31,7 +31,7 @@ class GestionCourriel
         'oUtilisateur' => $oUtilisateur
         // 'headers'      => $headers
       ],
-      'gabarit-admin-min',
+      'gabarit-courriel',
       true
     );
 
@@ -46,8 +46,7 @@ class GestionCourriel
       $headers = 'MIME-Version: 1.0' . "\n";
       $headers .= 'Content-Type: text/html; charset=utf-8' . "\n";
       $headers .= 'From: Le Méliès <support@lemelies.com>' . "\n";
-      // ajouter les "headers" du message, puis l'envoyer par la fonction mail() 
+      mail($destinataire, $objetCourriel, $message, $headers);
     }
   }
-
 }
