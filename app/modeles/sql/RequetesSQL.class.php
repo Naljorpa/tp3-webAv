@@ -189,5 +189,12 @@ class RequetesSQL extends RequetesPDO {
     return $this->CUDLigne(['utilisateur_id' => $utilisateur_id]); 
   }
 
+  public function modifierMdp($champs) {
+    $this->sql ='
+    UPDATE utilisateur SET utilisateur_mdp = SHA2( :utilisateur_mdp, 512) WHERE 
+    utilisateur_id = :utilisateur_id';
+    return $this->CUDLigne($champs);
+  }
+
 
 }

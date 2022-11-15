@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow">
-  <title>{{ titre }}</title>
-  <link rel="stylesheet" type="text/css" href="/css/admin.css?v=1.1">
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="robots" content="noindex, nofollow">
+		<title>{{ titre }}</title>
+		<link rel="stylesheet" type="text/css" href="/css/admin.css?v=1.1">
+	</head>
 
-<body>
-  <div id="page">
-    <header>
-      <p>
-        {{ oUtilisateur.utilisateur_prenom }} {{ oUtilisateur.utilisateur_nom }}
-        <a href="admin?entite=utilisateur&action=d">Déconnecter</a>
-      </p>
-      <nav>
-         <ul>
+	<body>
+		<div id="page">
+			<header>
+				<p>
+					{{ oUtilisateur.utilisateur_prenom }}
+					{{ oUtilisateur.utilisateur_nom }}
+					<a href="admin?entite=utilisateur&action=d">Déconnecter</a>
+				</p>
+				<nav>
+					<ul>
 						<li>
 							<hr>
 							<a href="admin">Films</a>
@@ -38,20 +39,20 @@
 						<li>
 							<a href="admin?entite=salle">Salles</a>
 						</li>
-						    {% if utilisateur.utilisateur_profil == "administrateur" %}
-						<li>
-							<hr>
-							<a href="admin?entite=utilisateur">Utilisateurs</a>
-						</li>
-						    {% endif %}
+						{% if oUtilisateur.utilisateur_profil == "administrateur" %}
+							<li>
+								<hr>
+								<a href="admin?entite=utilisateur">Utilisateurs</a>
+							</li>
+						{% endif %}
 					</ul>
-      </nav>
-    </header>
-    <main>
+				</nav>
+			</header>
+			<main>
 
-    {{ include(templateMain) }}
+				{{ include(templateMain) }}
 
-    </main>
-  </div>
-</body>
+			</main>
+		</div>
+	</body>
 </html>

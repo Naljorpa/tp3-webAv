@@ -13,17 +13,23 @@ class GestionCourriel
    * @param object $oUtilisateur utilisateur destinataire
    *
    */
-  public function envoyerMdp(Utilisateur $oUtilisateur)
+  public function envoyerMdp($oUtilisateur)
   {
-    $destinataire  = $oUtilisateur->utilisateur_courriel;
-    $headers = "";
+    if(is_array($oUtilisateur)){
+      $destinataire  = $oUtilisateur['utilisateur_courriel'];
+    } else if (is_object($oUtilisateur)){
+      $destinataire  = $oUtilisateur->utilisateur_courriel;
+    }
+    
+   
+    // $headers = "";
     $message  = (new Vue)->generer(
       'cMdp',
       [
         'titre'        => 'Information',
         'http_host'    => $_SERVER['HTTP_HOST'],
-        'oUtilisateur' => $oUtilisateur,
-        'headers'      => $headers
+        'oUtilisateur' => $oUtilisateur
+        // 'headers'      => $headers
       ],
       'gabarit-admin-min',
       true
@@ -43,4 +49,5 @@ class GestionCourriel
       // ajouter les "headers" du message, puis l'envoyer par la fonction mail() 
     }
   }
+
 }

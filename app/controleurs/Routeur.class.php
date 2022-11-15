@@ -20,8 +20,9 @@ class Routeur {
   protected $oRequetesSQL; // objet RequetesSQL utilisé par tous les contrôleurs
 
   // const BASE_URI = '/31B/TP3/'; // dossier racine du site par rapport au dossier racine d'Apache 
-  const BASE_URI = '/tp3-webAv/'; // pour le PHP Server de Visual Studio Code
+  const BASE_URI = '/'; // pour le PHP Server de Visual Studio Code
 
+  const FORBIDDEN       = 'HTTP 403';
   const ERROR_NOT_FOUND = 'HTTP 404';
 
   /**
@@ -64,7 +65,10 @@ class Routeur {
    */
   public function erreur($e) {
     $message = $e->getMessage();
-    if ($message == self::ERROR_NOT_FOUND) {
+    if ($message == self::FORBIDDEN) {
+      header('HTTP/1.1 403 Forbidden');
+    } 
+    else if ($message == self::ERROR_NOT_FOUND) {
       header('HTTP/1.1 404 Not Found');
       (new Vue)->generer('vErreur404', [], 'gabarit-erreur');
     } else {

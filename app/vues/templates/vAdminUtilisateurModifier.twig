@@ -1,32 +1,44 @@
 <section>
-  <h1>{{ titre|upper }}</h1>
-  
-  <form method="POST" action="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateur.utilisateur_id }}">
+	<h1>{{ titre|upper }}</h1>
 
-    <label>Nom</label>
-    <input name="utilisateur_nom" value="{{ utilisateur.utilisateur_nom }}">
-    <span>&nbsp;{{ erreurs.utilisateur_nom }}</span>
+	<form method="POST" action="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateur.utilisateur_id }}">
 
-    <label>Prénom</label>
-    <input name="utilisateur_prenom" value="{{ utilisateur.utilisateur_prenom }}">
-    <span>&nbsp;{{ erreurs.utilisateur_prenom }}</span>
+		<label>Nom</label>
+		<input name="utilisateur_nom" value="{{ utilisateur.utilisateur_nom }}">
+		<span>&nbsp;{{ erreurs.utilisateur_nom }}</span>
 
-    	<label>Courriel</label>
+		<label>Prénom</label>
+		<input name="utilisateur_prenom" value="{{ utilisateur.utilisateur_prenom }}">
+		<span>&nbsp;{{ erreurs.utilisateur_prenom }}</span>
+
+		<label>Courriel</label>
 		<input name="utilisateur_courriel" value="{{ utilisateur.utilisateur_courriel }}">
 		<span>&nbsp;{{ erreurs.utilisateur_courriel }}</span>
 
 
 		<label for="utilisateur_profil">Profil</label>
 		<select name="utilisateur_profil" id="utilisateur_profil">
-			<option selected="selected" value="utilisateur">Utilisateur</option>
-			<option value="editeur">Editeur</option>
-			<option value="administrateur">Administrateur</option>
+			{% if utilisateur.utilisateur_profil == "utilisateur" %}
+				<option selected="selected" value="{{ utilisateur.utilisateur_profil }}">{{ utilisateur.utilisateur_profil|capitalize }}</option>
+				<option value="administrateur">Administrateur</option>
+				<option value="editeur">Editeur</option>
+			{% endif %}
+			{% if utilisateur.utilisateur_profil == "editeur" %}
+				<option selected="selected" value="{{ utilisateur.utilisateur_profil }}">{{ utilisateur.utilisateur_profil|capitalize }}</option>
+				<option value="administrateur">Administrateur</option>
+				<option value="utilisateur">Utilisateur</option>
+			{% endif %}
+			{% if utilisateur.utilisateur_profil == "administrateur" %}
+				<option selected="selected" value="{{ utilisateur.utilisateur_profil }}">{{ utilisateur.utilisateur_profil|capitalize }}</option>
+				<option value="editeur">Editeur</option>
+				<option value="utilisateur">Utilisateur</option>
+			{% endif %}
 		</select>
 		<span>&nbsp;{{ erreurs.utilisateur_profil }}</span>
 
-    <input type="hidden" name="utilisateur_id" value="{{ utilisateur.utilisateur_id }}">
+		<input type="hidden" name="utilisateur_id" value="{{ utilisateur.utilisateur_id }}">
 
-    <input type="submit" value="Envoyer">
+		<input type="submit" value="Envoyer">
 
-  </form>
+	</form>
 </section>

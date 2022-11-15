@@ -2,7 +2,7 @@
 <section>
   <h1>{{ titre|upper }}</h1>
   <a href="admin?entite=utilisateur&action=a">Ajouter un Utilisateur</a>
-  <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction }}&nbsp;</p>   
+  <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw }}&nbsp;</p>   
   <div class="g utilisateurs">
     <div class="t">Id</div>
     <div class="t">Utilisateur</div>
