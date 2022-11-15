@@ -5,8 +5,8 @@ document.querySelectorAll('.confirmer').forEach(e => e.onclick = afficherFenetre
  * Affichage d'une fenêtre modale
  */
 function afficherFenetreModale() {
-  let locationHref = () => {location.href = this.dataset.href};
-  let annuler      = () => {document.getElementById('modaleSuppression').close()}; 
+  let locationHref = () => { location.href = this.dataset.href };
+  let annuler = () => { document.getElementById('modaleSuppression').close() };
   document.querySelector('#modaleSuppression .OK').onclick = locationHref;
   document.querySelector('#modaleSuppression .KO').onclick = annuler;
   document.getElementById('modaleSuppression').showModal();

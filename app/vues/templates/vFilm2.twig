@@ -1,74 +1,91 @@
 <section>
-  <h1>{{ film.film_titre }}</h1>
-  <div>
-    <img src="{{ film.film_affiche }}" alt="">
-    <div class="info">
-      <p>{{ film.film_resume }}</p>
-      <hr>
-      <ul>
-        <li><span>Genre:</span><span>{{ film.genre_nom }}</span></li>
-        <li><span>Année:</span><span>{{ film.film_annee_sortie }}</span></li>
-        <li><span>Durée:</span><span>{{ film.film_duree }} min</span></li>
+	<h1>{{ film.film_titre }}</h1>
+	<div>
+		<img src="{{ film.film_affiche }}" alt="">
+		<div class="info">
+			<p>{{ film.film_resume }}</p>
+			<hr>
+			<ul>
+				<li>
+					<span>Genre:</span>
+					<span>{{ film.genre_nom }}</span>
+				</li>
+				<li>
+					<span>Année:</span>
+					<span>{{ film.film_annee_sortie }}</span>
+				</li>
+				<li>
+					<span>Durée:</span>
+					<span>{{ film.film_duree }}
+						min</span>
+				</li>
 
-        <!-- liste des réalisateurs --> 
-        <li>
-          <span>Réalisation:</span>
-          <span>
-          {% for realisateur in realisateurs %}
-            {{ realisateur.realisateur_prenom }} {{ realisateur.realisateur_nom}}{% if not loop.last %},{% endif %} 
-          {% endfor %}
-          </span>
-        </li>
+				<!-- liste des réalisateurs -->
+				<li>
+					<span>Réalisation:</span>
+					<span>
+						{% for realisateur in realisateurs %}
+							{{ realisateur.realisateur_prenom }}
+							{{ realisateur.realisateur_nom}}
+							{% if not loop.last %},
+							{% endif %}
+						{% endfor %}
+					</span>
+				</li>
 
-        <!-- liste des pays --> 
-        <li>
-          <span>Pays:</span>
-          <span>
-          {% for unPays in pays %}
-            {{ unPays.pays_nom }}{% if not loop.last %},{% endif %} 
-          {% endfor %}  
-          </span>
-        </li>
+				<!-- liste des pays -->
+				<li>
+					<span>Pays:</span>
+					<span>
+						{% for unPays in pays %}
+							{{ unPays.pays_nom }}
+							{% if not loop.last %},
+							{% endif %}
+						{% endfor %}
+					</span>
+				</li>
 
-        <!-- liste des acteurs --> 
-        <li>
-          <span>Interprètes:</span>
-          <span>
-          {% for acteur in acteurs %}
-            {{ acteur.acteur_prenom  }} {{ acteur.acteur_nom }}<br>
-          {% endfor %}
-          </span>
-        </li>
-              
-      </ul>
-    </div>
-    <div class="ba">
-      {% if film.film_bande_annonce != null %}        
-      <video src="{{ film.film_bande_annonce }}" controls></video>
-      {% endif %}
+				<!-- liste des acteurs -->
+				<li>
+					<span>Interprètes:</span>
+					<span>
+						{% for acteur in acteurs %}
+							{{ acteur.acteur_prenom  }}
+							{{ acteur.acteur_nom }}<br>
+						{% endfor %}
+					</span>
+				</li>
 
-      <!-- horaires -->  
-      {% if seances %}
-      <section>
-        <h2>Horaires</h2>
-        <div id="horaires">
-        {% set jourRef = '' %}
-        {% for seance in seances %}
-          {% if jourRef != seance.seance_date %}
-            {% if jourRef != '' %}
-          </div>
-            {% endif %}
-          <div class="jour">{{ seance.seance_jour|capitalize }} {{ seance.seance_date[8:] }}</div>
-          <div class="heures">
-            {% set jourRef = seance.seance_date %}
-          {% endif %}
-            <div>{{ seance.seance_heure[:5] }}</div>
-        {% endfor %}
-          </div>           
-        </div>
-      </section>
-  
-      {% endif %}
-    </div>
-  </div>  
+			</ul>
+		</div>
+		<div class="ba">
+			{% if film.film_bande_annonce != null %}
+				<video src="{{ film.film_bande_annonce }}" controls></video>
+			{% endif %}
+
+			<!-- horaires -->
+			{% if seances %}
+				<section>
+					<h2>Horaires</h2>
+					<div id="horaires">
+						{% set jourRef = '' %}
+						{% for seance in seances %}
+							{% if jourRef != seance.seance_date %}
+								{% if jourRef != '' %}
+								</div>
+							{% endif %}
+							<div class="jour">{{ seance.seance_jour|capitalize }}
+								{{ seance.seance_date[8:] }}</div>
+							<div class="heures">
+								{% set jourRef = seance.seance_date %}
+							{% endif %}
+							<div>{{ seance.seance_heure[:5] }}</div>
+						{% endfor %}
+					</div>
+				</div>
+			</section>
+
+		{% endif %}
+	</div>
+</div>
 </section>

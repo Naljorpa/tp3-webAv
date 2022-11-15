@@ -1,15 +1,21 @@
-
-
 <section>
-  <p>Bonjour  {{ oUtilisateur.utilisateur_prenom }} {{ oUtilisateur.utilisateur_nom }},</p>
+	<p>Bonjour
+		{{ oUtilisateur.utilisateur_prenom }}
+		{{ oUtilisateur.utilisateur_nom }},</p>
 
-  <p>Nous avons le plaisir de vous transmettre votre identifiant de connexion et votre mot de passe pour accéder à l'administration de notre site Le Méliès.</p>
-  
-  <p>Identifiant: <strong>{{ oUtilisateur.utilisateur_courriel }}</strong></p>
-  <p>Mot de passe: <strong>{{ oUtilisateur.utilisateur_mdp }}</strong></p>
+	<p>Nous avons le plaisir de vous transmettre votre identifiant de connexion et votre mot de passe pour accéder à l'administration de notre site Le Méliès.</p>
 
-  <p><a href="http://{{ http_host }}{{ constant('Routeur::BASE_URI') }}admin">Cliquez sur ce lien pour accéder à notre interface d'administration</a></p>
-  
-  <p>Cordialement,</p>
-  <p>Support Technique</p>
+	<p>Identifiant:
+		<strong>{{ oUtilisateur.utilisateur_courriel }}</strong>
+	</p>
+	<p>Mot de passe:
+		<strong>{{ oUtilisateur.utilisateur_mdp }}</strong>
+	</p>
+
+	<p>
+		<a href="http://{{ http_host }}{{ constant('Routeur::BASE_URI') }}admin">Cliquez sur ce lien pour accéder à notre interface d'administration</a>
+	</p>
+
+	<p>Cordialement,</p>
+	<p>Support Technique</p>
 </section>

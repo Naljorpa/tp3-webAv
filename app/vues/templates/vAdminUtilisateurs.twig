@@ -1,29 +1,32 @@
-<script>history.pushState({}, '', 'admin?entite=utilisateur')</script>
+<script>
+	history.pushState({}, '', 'admin?entite=utilisateur')
+</script>
 <section>
-  <h1>{{ titre|upper }}</h1>
-  <a href="admin?entite=utilisateur&action=a">Ajouter un Utilisateur</a>
-  <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw }}&nbsp;</p>   
-  <div class="g utilisateurs">
-    <div class="t">Id</div>
-    <div class="t">Utilisateur</div>
-    <div class="t">Courriel</div>    
-    <div class="t">Profil</div>    
-    <div class="t">Actions</div>
-  {% for utilisateur in utilisateurs %}
-    <div class="l">
-      <div class="c dr">{{ utilisateur.utilisateur_id }}</div>
-      <div class="c   ">{{ utilisateur.utilisateur_prenom }} {{ utilisateur.utilisateur_nom }}</div>
-      <div class="c dr">{{ utilisateur.utilisateur_courriel }}</div>
-      <div class="c ">{{ utilisateur.utilisateur_profil }}</div>
-      <div class="c ">
-        <a href="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateur.utilisateur_id }}">modifier</a>
-          {% if utilisateur.utilisateur_id %}
-        <span class="confirmer" data-href="admin?entite=utilisateur&action=s&utilisateur_id={{ utilisateur.utilisateur_id }}">supprimer</span>
-        <a href="admin?entite=utilisateur&action=genererMdp&utilisateur_id={{ utilisateur.utilisateur_id }}">générer mdp</a>
-        {% endif %}
-      </div>
-    </div>
-  {% endfor %} 
-  </div>
+	<h1>{{ titre|upper }}</h1>
+	<a href="admin?entite=utilisateur&action=a">Ajouter un Utilisateur</a>
+	<p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw }}&nbsp;</p>
+	<div class="g utilisateurs">
+		<div class="t">Id</div>
+		<div class="t">Utilisateur</div>
+		<div class="t">Courriel</div>
+		<div class="t">Profil</div>
+		<div class="t">Actions</div>
+		{% for utilisateur in utilisateurs %}
+			<div class="l">
+				<div class="c dr">{{ utilisateur.utilisateur_id }}</div>
+				<div class="c   ">{{ utilisateur.utilisateur_prenom }}
+					{{ utilisateur.utilisateur_nom }}</div>
+				<div class="c dr">{{ utilisateur.utilisateur_courriel }}</div>
+				<div class="c ">{{ utilisateur.utilisateur_profil }}</div>
+				<div class="c ">
+					<a href="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateur.utilisateur_id }}">modifier</a>
+					{% if utilisateur.utilisateur_id %}
+						<span class="confirmer" data-href="admin?entite=utilisateur&action=s&utilisateur_id={{ utilisateur.utilisateur_id }}">supprimer</span>
+						<a href="admin?entite=utilisateur&action=genererMdp&utilisateur_id={{ utilisateur.utilisateur_id }}">générer mdp</a>
+					{% endif %}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 </section>
 {{ include("modaleSuppression.twig") }}

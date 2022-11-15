@@ -154,7 +154,7 @@ class Utilisateur
   {
     unset($this->erreurs['utilisateur_profil']);
     $utilisateur_profil = trim($utilisateur_profil);
-    $this->utilisateur_profil = $utilisateur_profil; 
+    $this->utilisateur_profil = $utilisateur_profil;
   }
 
   /**

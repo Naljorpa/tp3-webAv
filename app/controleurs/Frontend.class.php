@@ -5,17 +5,19 @@
  * 
  */
 
-class Frontend extends Routeur {
+class Frontend extends Routeur
+{
 
   private $film_id;
-  
+
   /**
    * Constructeur qui initialise des propriétés à partir du query string
    * et la propriété oRequetesSQL déclarée dans la classe Routeur
    * 
    */
-  public function __construct() {
-    $this->film_id = $_GET['film_id'] ?? null; 
+  public function __construct()
+  {
+    $this->film_id = $_GET['film_id'] ?? null;
     $this->oRequetesSQL = new RequetesSQL;
   }
 
@@ -23,36 +25,43 @@ class Frontend extends Routeur {
   /**
    * Lister les films à l'affiche
    * 
-   */  
-  public function listerAlaffiche() {
+   */
+  public function listerAlaffiche()
+  {
     $films = $this->oRequetesSQL->getFilms('enSalle');
-    (new Vue)->generer("vListeFilms",
-            array(
-              'titre'  => "À l'affiche",
-              'films' => $films
-            ),
-            "gabarit-frontend");
+    (new Vue)->generer(
+      "vListeFilms",
+      array(
+        'titre'  => "À l'affiche",
+        'films' => $films
+      ),
+      "gabarit-frontend"
+    );
   }
 
   /**
    * Lister les films diffusés prochainement
    * 
-   */  
-  public function listerProchainement() {
+   */
+  public function listerProchainement()
+  {
     $films = $this->oRequetesSQL->getFilms('prochainement');
-    (new Vue)->generer("vListeFilms",
-            array(
-              'titre'  => "Prochainement",
-              'films' => $films
-            ),
-            "gabarit-frontend");
+    (new Vue)->generer(
+      "vListeFilms",
+      array(
+        'titre'  => "Prochainement",
+        'films' => $films
+      ),
+      "gabarit-frontend"
+    );
   }
 
   /**
    * Voir les informations d'un film
    * 
-   */  
-  public function voirFilm() {
+   */
+  public function voirFilm()
+  {
     $film = false;
     if (!is_null($this->film_id)) {
       $film = $this->oRequetesSQL->getFilm($this->film_id);
@@ -75,15 +84,17 @@ class Frontend extends Routeur {
     }
     if (!$film) throw new Exception("Film inexistant.");
 
-    (new Vue)->generer("vFilm",
-            array(
-              'titre'        => $film['film_titre'],
-              'film'         => $film,
-              'realisateurs' => $realisateurs,
-              'pays'         => $pays,
-              'acteurs'      => $acteurs,
-              'seances'      => $seances
-            ),
-            "gabarit-frontend");
+    (new Vue)->generer(
+      "vFilm",
+      array(
+        'titre'        => $film['film_titre'],
+        'film'         => $film,
+        'realisateurs' => $realisateurs,
+        'pays'         => $pays,
+        'acteurs'      => $acteurs,
+        'seances'      => $seances
+      ),
+      "gabarit-frontend"
+    );
   }
 }
