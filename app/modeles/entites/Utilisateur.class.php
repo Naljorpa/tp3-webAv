@@ -183,4 +183,27 @@ class Utilisateur
     $this->utilisateur_mdp = $mdp;
     return $this;
   }
+
+    /**
+   * Vérifie si le courriel existe et genere un message d'erreur si c'est le cas
+   */
+
+  public function verifie_courriel($utilisateur)
+  {
+    $oRequetesSQL = new RequetesSQL;
+    if ($oRequetesSQL->verifieCourriel($utilisateur->utilisateur_courriel)) {
+      $utilisateur->erreurs['utilisateur_courriel']  = "Ce courriel existe déjà";
+    }
+  }
+
+   /**
+   * Vérifie si le courriel existe sauf s'il est associer avec le id passé et genere un message d'erreur si c'est le cas
+   */
+
+  public function verifie_courrielId($utilisateur){
+    $oRequetesSQL = new RequetesSQL;
+    if ($oRequetesSQL->verifie_courrielId($utilisateur->utilisateur_courriel, $utilisateur->utilisateur_id)) {
+      $utilisateur->erreurs['utilisateur_courriel']  = "Ce courriel existe déjà";
+    }
+  }
 }

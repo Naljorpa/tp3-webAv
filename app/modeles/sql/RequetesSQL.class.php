@@ -214,4 +214,30 @@ class RequetesSQL extends RequetesPDO
     utilisateur_id = :utilisateur_id';
     return $this->CUDLigne($champs);
   }
+
+  /**
+   * Vérifie si le courriel existe
+   * @param string $utilisateur_courriel
+   * @return array du courriel en question ou rien sinon
+   */
+
+  public function verifieCourriel($utilisateur_courriel)
+  {
+    $this->sql = '
+    SELECT utilisateur_courriel FROM utilisateur WHERE utilisateur_courriel = :utilisateur_courriel';
+    return $this->getLignes(['utilisateur_courriel' => $utilisateur_courriel], RequetesPDO::UNE_SEULE_LIGNE);
+  }
+
+  /**
+   * Vérifie si le courriel existe sauf s'il est associé avec le id passé.
+   * @param int $utilisateur_id
+   * @return array du courriel en question ou rien sinon
+   */
+
+  public function verifie_courrielId($utilisateur_courriel, $utilisateur_id)
+  {
+    $this->sql = '
+    SELECT utilisateur_courriel FROM utilisateur WHERE utilisateur_courriel = :utilisateur_courriel AND utilisateur_id != :utilisateur_id';
+    return $this->getLignes(['utilisateur_courriel' => $utilisateur_courriel, 'utilisateur_id' => $utilisateur_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
 }

@@ -41,8 +41,8 @@ class Admin extends Routeur
 
     'film' => [
       'l' => [
-        'nom' => 'listerFilm',
-        'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR, Utilisateur::PROFIL_UTILISATEUR]
+        'nom' => 'listerFilms',
+        'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
       ],
       'a' => [
         'nom' => 'ajouterFilm', 'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
@@ -55,8 +55,46 @@ class Admin extends Routeur
         'nom' => 'supprimerFilm',
         'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
       ]
+    ],
+    'genre' => [
+      'l' => [
+        'nom' => 'listerGenres',
+        'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
+      ]
+    ],
+    'realisateur' => [
+      'l' => [
+        'nom' => 'listerRealisateurs',
+        'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
+      ]
+    ],
+    'acteur' => [
+      'l' => [
+        'nom' => 'listerActeurs',
+        'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
+      ]
+    ],
+    'pays' => [
+      'l' => [
+        'nom' => 'listerPays',
+        'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
+      ]
+    ],
+    'seance' => [
+      'l' => [
+        'nom' => 'listerSeances',
+        'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
+      ]
+    ],
+    'salle' => [
+      'l' => [
+        'nom' => 'listerSalles',
+        'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]
+      ]
     ]
   ];
+
+
 
   private $classRetour = "fait";
   private $messageRetourAction = "";
@@ -66,7 +104,7 @@ class Admin extends Routeur
    */
   public function __construct()
   {
-    $this->entite    = $_GET['entite']    ?? 'utilisateur';
+    $this->entite    = $_GET['entite']    ?? 'film';
     $this->action    = $_GET['action']    ?? 'l';
     $this->utilisateur_id = $_GET['utilisateur_id'] ?? null;
     $this->film_id          = $_GET['film_id']  ?? null;
@@ -223,6 +261,10 @@ class Admin extends Routeur
       $utilisateur = $_POST;
       $oUtilisateur = new Utilisateur($utilisateur); // création d'un objet Utilisateur pour contrôler la saisie
       $erreurs = $oUtilisateur->erreurs;
+      if (count($erreurs) === 0) {
+        $oUtilisateur->verifie_courriel($oUtilisateur);
+      }
+      $erreurs = $oUtilisateur->erreurs;
       if (count($erreurs) === 0) { // aucune erreur de saisie -> requête SQL d'ajout
         $oUtilisateur->genererMdp();
         $utilisateur_id = $this->oRequetesSQL->ajouterUtilisateur([
@@ -270,6 +312,12 @@ class Admin extends Routeur
     if (count($_POST) !== 0) {
       $utilisateur = $_POST;
       $oUtilisateur = new Utilisateur($utilisateur);
+
+      $erreurs = $oUtilisateur->erreurs;
+      if (count($erreurs) === 0) {
+        $oUtilisateur->verifie_courrielId($oUtilisateur);
+      }
+
       $erreurs = $oUtilisateur->erreurs;
       if (count($erreurs) === 0) {
         if ($this->oRequetesSQL->modifierUtilisateur([
@@ -309,6 +357,7 @@ class Admin extends Routeur
   /**
    * Supprimer un utilisateur identifié par sa clé dans la propriété utilisateur_id
    */
+
   public function supprimerUtilisateur()
   {
     if ($this->oRequetesSQL->supprimerUtilisateur($this->utilisateur_id)) {
@@ -318,5 +367,119 @@ class Admin extends Routeur
       $this->messageRetourAction = "Suppression de l'utilisateur numéro $this->utilisateur_id non effectuée.";
     }
     $this->listerUtilisateurs();
+  }
+
+  public function listerFilms()
+  {
+    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+
+    (new Vue)->generer(
+      'vAdminDev',
+      array(
+        'oUtilisateur'        => $this->oUtilisateur,
+        'titre'               => 'Gestion des films',
+        'utilisateurs'        => $utilisateurs,
+        'classRetour'         => $this->classRetour,
+        'messageRetourAction' => $this->messageRetourAction
+      ),
+      'gabarit-admin'
+    );
+  }
+
+  public function listerGenres()
+  {
+    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+
+    (new Vue)->generer(
+      'vAdminDev',
+      array(
+        'oUtilisateur'        => $this->oUtilisateur,
+        'titre'               => 'Gestion des genres',
+        'utilisateurs'        => $utilisateurs,
+        'classRetour'         => $this->classRetour,
+        'messageRetourAction' => $this->messageRetourAction
+      ),
+      'gabarit-admin'
+    );
+  }
+  public function listerRealisateurs()
+  {
+    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+
+    (new Vue)->generer(
+      'vAdminDev',
+      array(
+        'oUtilisateur'        => $this->oUtilisateur,
+        'titre'               => 'Gestion des realisateurs',
+        'utilisateurs'        => $utilisateurs,
+        'classRetour'         => $this->classRetour,
+        'messageRetourAction' => $this->messageRetourAction
+      ),
+      'gabarit-admin'
+    );
+  }
+  public function listerActeurs()
+  {
+    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+
+    (new Vue)->generer(
+      'vAdminDev',
+      array(
+        'oUtilisateur'        => $this->oUtilisateur,
+        'titre'               => 'Gestion des acteurs',
+        'utilisateurs'        => $utilisateurs,
+        'classRetour'         => $this->classRetour,
+        'messageRetourAction' => $this->messageRetourAction
+      ),
+      'gabarit-admin'
+    );
+  }
+  public function listerPays()
+  {
+    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+
+    (new Vue)->generer(
+      'vAdminDev',
+      array(
+        'oUtilisateur'        => $this->oUtilisateur,
+        'titre'               => 'Gestion des pays',
+        'utilisateurs'        => $utilisateurs,
+        'classRetour'         => $this->classRetour,
+        'messageRetourAction' => $this->messageRetourAction
+      ),
+      'gabarit-admin'
+    );
+  }
+  public function listerSeances()
+  {
+    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+
+    (new Vue)->generer(
+      'vAdminDev',
+      array(
+        'oUtilisateur'        => $this->oUtilisateur,
+        'titre'               => 'Gestion des seances',
+        'utilisateurs'        => $utilisateurs,
+        'classRetour'         => $this->classRetour,
+        'messageRetourAction' => $this->messageRetourAction
+      ),
+      'gabarit-admin'
+    );
+  }
+  public function listerSalles()
+  {
+    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+
+    (new Vue)->generer(
+      'vAdminDev',
+      array(
+        'oUtilisateur'        => $this->oUtilisateur,
+        'titre'               => 'Gestion des salles',
+        'utilisateurs'        => $utilisateurs,
+        'classRetour'         => $this->classRetour,
+        'messageRetourAction' => $this->messageRetourAction
+      ),
+      'gabarit-admin'
+    );
   }
 }
